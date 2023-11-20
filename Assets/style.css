@@ -1,0 +1,9 @@
+header{
+    background-color: black;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 30px
+}
+.submit_btn{width: 100%;}
