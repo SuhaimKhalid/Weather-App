@@ -7,3 +7,9 @@ header{
     padding: 30px
 }
 .submit_btn{width: 100%;}
+
+#today{
+    border: 1px solid black;
+    padding: 10px;
+   margin-top: 45px;
+}
