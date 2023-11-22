@@ -7,28 +7,26 @@ event.preventDefault();
 // Delcare a Variable to get the value from the input field
 var search = $("#search-input").val().trim();
 
+// Weather Api
 var query ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
 
-
+// Fetch the api and convert it into Json
 fetch(query).then(function(response){
     return response.json();
 }).then(function(data){
 
     console.log(data);
-    createhtml(search, data)
-    
+    createhtml(search, data);  
 })
-
-
 
 });
 
 function createhtml(search, data){
 
-// Delcare some variable to create element in Html
+// Delcare some variables to create elements in Html
 var section = $("<section>");
 var h1 = $("<h1>");
-var i1 = $("<i>");
+var img = $("<img>");
 var p1 = $("<p>");
 var p2 = $("<p>");
 var p3 = $("<p>");
@@ -40,14 +38,20 @@ section.attr("id","today");
 
 // Pick the main Div to show newly created Html
 var Text_area = $(".Text_area");
-Text_area.empty();
-Text_area.append(section);
-section.append(h1,p1,p2,p3);
-h1.append(i1);
 
-h1.text(data.name );
-// i.text(data.city.name);
+// To clear the Textarea Every New Time
+Text_area.empty();
+
+
+h1.text(data.name);
+img.attr("src","https://openweathermap.org/img/wn/"+ data.weather[0].icon+"@2x.png")
 p1.text("Temperature: "+data.main.temp);
 p2.text("Wind Speed:: "+data.wind.speed);
 p3.text("Humidity: "+data.main.humidity+"%");
+
+
+// Append the divs to the relative sections in html
+Text_area.append(section);
+section.append(h1,p1,p2,p3);
+h1.append(img);
 }
