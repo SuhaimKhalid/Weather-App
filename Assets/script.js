@@ -8,20 +8,39 @@ event.preventDefault();
 var search = $("#search-input").val().trim();
 
 // Weather Api
-var query ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
+var currentWeather ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
 
 // Fetch the api and convert it into Json
-fetch(query).then(function(response){
+fetch(currentWeather).then(function(response){
     return response.json();
 }).then(function(data){
 
-    console.log(data);
-    createhtml(search, data);  
+    display_Current_weather(data); 
+    fetch_Forecast(search) 
 })
+
+
 
 });
 
-function createhtml(search, data){
+function fetch_Forecast(search) {
+    var forecast ="https://api.openweathermap.org/data/2.5/forecast?q="+search+"&appid="+api_key;
+
+
+    fetch(forecast)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (datas) {
+            // display_Forecast_weather(data);
+            console.log(datas);
+        })
+        
+}
+
+
+
+function display_Current_weather(data){
 
 // Delcare some variables to create elements in Html
 var section = $("<section>");
