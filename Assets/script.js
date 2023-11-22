@@ -1,5 +1,5 @@
 
-
+var api_key="06894da41b711aff533424931a15e0ec";
 
 // Make A event listner on submit button to run a function
 $("#search-button").on("click",function(event){
@@ -7,12 +7,23 @@ event.preventDefault();
 // Delcare a Variable to get the value from the input field
 var search = $("#search-input").val().trim();
 
-console.log(search);
-createhtml(search)
+var query ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
+
+
+fetch(query).then(function(response){
+    return response.json();
+}).then(function(data){
+
+    console.log(data);
+    createhtml(search, data)
+    
+})
+
+
 
 });
 
-function createhtml(search){
+function createhtml(search, data){
 
 // Delcare some variable to create element in Html
 var section = $("<section>");
@@ -34,5 +45,9 @@ Text_area.append(section);
 section.append(h1,p1,p2,p3);
 h1.append(i1);
 
-h1.text(search);
+h1.text(data.name );
+// i.text(data.city.name);
+p1.text("Temperature: "+data.main.temp);
+p2.text("Wind Speed:: "+data.wind.speed);
+p3.text("Humidity: "+data.main.humidity+"%");
 }
