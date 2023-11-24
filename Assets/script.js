@@ -16,7 +16,7 @@ fetch(currentWeather).then(function(response){
 }).then(function(data){
 
     display_Current_weather(data); 
-   
+   console.log(data);
 })
 
 
@@ -48,8 +48,11 @@ var Text_area = $(".Text_area");
 // To clear the Textarea Every New Time
 Text_area.empty();
 
+// Declare a variable to get date value from abi and store it in a variable
+var date = new Date(data.dt * 1000); // Convert timestamp to date
+var dateString = date.toLocaleDateString();
 
-h1.text(data.name);
+h1.text(data.name + " ("+dateString+")");
 img.attr("src","https://openweathermap.org/img/wn/"+ data.weather[0].icon+"@2x.png")
 p1.text("Temperature: "+data.main.temp);
 p2.text("Wind Speed:: "+data.wind.speed);
