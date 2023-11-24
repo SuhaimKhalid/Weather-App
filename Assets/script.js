@@ -16,27 +16,14 @@ fetch(currentWeather).then(function(response){
 }).then(function(data){
 
     display_Current_weather(data); 
-    fetch_Forecast(search) 
+   
 })
 
 
 
 });
 
-function fetch_Forecast(search) {
-    var forecast ="https://api.openweathermap.org/data/2.5/forecast?q="+search+"&appid="+api_key;
 
-
-    fetch(forecast)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (datas) {
-            // display_Forecast_weather(data);
-            console.log(datas);
-        })
-        
-}
 
 
 
