@@ -8,8 +8,16 @@ header{
 }
 .submit_btn{width: 100%;}
 
-#today{
+#today div{
     border: 1px solid black;
     padding: 10px;
-   margin-top: 45px;
+    margin-top: 45px;
+}
+#forecast .forcast_row{display: flex;}
+#forecast .forcast_row div{
+    background-color: #2D3E50;
+    width: 20%;
+    margin: 1px 1px;
+    color: white;
+    padding: 10px;
 }
