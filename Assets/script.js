@@ -1,6 +1,10 @@
 
 var api_key="06894da41b711aff533424931a15e0ec";
 
+rendor();
+// Button arrays
+var button_array=[];
+
 // Make A event listner on submit button to run a function
 $("#search-button").on("click",function(event){
 event.preventDefault();
@@ -15,7 +19,6 @@ var search = $("#search-input").val().trim();
     addToSearchHistory(search);
 
     $("#search-input").val("");
-
 
 });
 
@@ -134,11 +137,42 @@ function addToSearchHistory(search) {
     // Add some classes
     button.attr("class","btn mt-3 btn-secondary")
     button.text(search);
-    button.on("click", function () {
-        var btn_search = button.text();
-        fetch_current_Weather(btn_search);
-        fetch_Forecast(btn_search);
-    });
+
     historyList.append(button);
+
+    button_array.push(button.text())
+    localStorage.setItem("Buttons",JSON.stringify(button_array));
 }
 
+
+function rendor(){
+
+    var get_buttons = JSON.parse(localStorage.getItem("Buttons"));
+
+    if(get_buttons){
+        for(var i=0; i<get_buttons.length; i++){
+
+             button_array= get_buttons;
+
+             // Passing data
+             var getval=button_array[i];
+
+            var storage_button = $("<button>");
+            storage_button.attr("class","btn mt-3 btn-secondary")
+
+            storage_button.text(getval);
+            var historyList = $("#history");
+            historyList.append(storage_button);
+
+        }
+  
+    }
+}
+
+
+$(".list-group").on("click","button", function (event) {
+    var btn= $(this).text();
+console.log(btn);
+    fetch_current_Weather(btn);
+    fetch_Forecast(btn);
+});
