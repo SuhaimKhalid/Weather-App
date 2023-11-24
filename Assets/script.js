@@ -7,22 +7,54 @@ event.preventDefault();
 // Delcare a Variable to get the value from the input field
 var search = $("#search-input").val().trim();
 
-// Weather Api
-var currentWeather ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
-
-// Fetch the api and convert it into Json
-fetch(currentWeather).then(function(response){
-    return response.json();
-}).then(function(data){
-
-    // Start function to show data in html page
-    display_Current_weather(data); 
+    // Start the current Weather fetch Api
+    fetch_current_Weather(search);
     //Start the second fetch function 
     fetch_Forecast(search);
-    
-})
+
+    addToSearchHistory(search);
+
+    $("#search-input").val("");
+
 
 });
+
+// Function to fetch the current weather
+function fetch_current_Weather(search) {
+    // Weather Api
+ var currentWeather ="https://api.openweathermap.org/data/2.5/weather?q="+search+"&appid="+api_key;
+ 
+ 
+     fetch(currentWeather)
+         .then(function (response) {
+             return response.json();
+         })
+         .then(function (data) {
+              // Start function to show data in html page
+              display_Current_weather(data); 
+ 
+         })
+         
+ }
+ 
+ // Function to fetch the forcast api
+ function fetch_Forecast(search) {
+     // Forcast Api
+     var forecast ="https://api.openweathermap.org/data/2.5/forecast?q="+search+"&appid="+api_key;
+ 
+     fetch(forecast)
+         .then(function (response) {
+             return response.json();
+         })
+         .then(function (data) {
+             // Function to display weather of upcoing days
+             display_Forecast_weather(data);
+         })
+         
+ }
+
+
+
 
 // Function to show the current weather data on html page
 function display_Current_weather(data){
@@ -57,23 +89,8 @@ h1.append(img);
 }
 
 
-// Function to fetch the forcast api
-function fetch_Forecast(search) {
-    // Forcast Api
-    var forecast ="https://api.openweathermap.org/data/2.5/forecast?q="+search+"&appid="+api_key;
 
-    fetch(forecast)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            // Function to display weather of upcoing days
-            display_Forecast_weather(data);
-            console.log(data);
-        })
-        
-}
-
+// Function to display the weather forcast for upcoming days
 function display_Forecast_weather(data) {
     // Declare a variable to get forecast div from html
     var forecastSection = $("#forecast");
@@ -108,4 +125,20 @@ function display_Forecast_weather(data) {
     }
 }
 
+
+// Function to save search in local storage
+function addToSearchHistory(search) {
+    var historyList = $("#history");
+    // Create New Html element
+    var button = $("<button>");
+    // Add some classes
+    button.attr("class","btn mt-3 btn-secondary")
+    button.text(search);
+    button.on("click", function () {
+        var btn_search = button.text();
+        fetch_current_Weather(btn_search);
+        fetch_Forecast(btn_search);
+    });
+    historyList.append(button);
+}
 
