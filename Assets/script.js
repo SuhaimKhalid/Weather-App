@@ -78,10 +78,13 @@ today.empty();
 var date = new Date(data.dt * 1000); // Convert timestamp to date
 var dateString = date.toLocaleDateString();
 
-h1.text(data.name + " ("+dateString+")");
+h1.text(data.name + " ("+dateString+")");273.15
 img.attr("src","https://openweathermap.org/img/wn/"+ data.weather[0].icon+"@2x.png")
-p1.text("Temperature: "+data.main.temp);
-p2.text("Wind Speed: "+data.wind.speed);
+
+var temp_c = data.main.temp - 273.15;
+
+p1.text("Temperature: "+temp_c.toFixed(2) + " C");
+p2.text("Wind Speed: "+data.wind.speed + " KPH");
 p3.text("Humidity: "+data.main.humidity+"%");
 
 
@@ -117,8 +120,11 @@ function display_Forecast_weather(data) {
         var forecastCard = $("<div>");
         var dateElement = $("<h3>").text(dateString);
         var iconElement = $("<img>").attr("src", "https://openweathermap.org/img/w/" + forecastItem.weather[0].icon + ".png");
-        var tempElement = $("<p>").text("Temperature: " + forecastItem.main.temp);
-        var windElement = $("<p>").text("Wind Speed: " + forecastItem.wind.speed);
+
+        var temp_c = forecastItem.main.temp - 273.15;
+
+        var tempElement = $("<p>").text("Temperature: " + temp_c.toFixed(2) + " C");
+        var windElement = $("<p>").text("Wind Speed: " + forecastItem.wind.speed + " KPH");
         var humidityElement = $("<p>").text("Humidity: " + forecastItem.main.humidity + "%");
 
         
@@ -176,10 +182,9 @@ function rendor(){
     }
 }
 
-
+// Add a event listner on every button
 $(".list-group").on("click","button", function (event) {
     var btn= $(this).text();
-console.log(btn);
     fetch_current_Weather(btn);
     fetch_Forecast(btn);
 });
