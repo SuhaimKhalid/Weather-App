@@ -81,8 +81,9 @@ var dateString = date.toLocaleDateString();
 h1.text(data.name + " ("+dateString+")");273.15
 img.attr("src","https://openweathermap.org/img/wn/"+ data.weather[0].icon+"@2x.png")
 
+// convert kelvin temp to Celsius
 var temp_c = data.main.temp - 273.15;
-
+// Putting data into the html elements
 p1.text("Temperature: "+temp_c.toFixed(2) + " C");
 p2.text("Wind Speed: "+data.wind.speed + " KPH");
 p3.text("Humidity: "+data.main.humidity+"%");
@@ -146,23 +147,28 @@ function addToSearchHistory(search) {
 
     historyList.append(button);
 
+    // Getting data from the local storage
     var get_local = JSON.parse(localStorage.getItem("Buttons"));
     if(get_local)
     {
         button_array=get_local;
     }
    
-    
+    // push data to the array
     button_array.push(button.text())
+    // save data in local storage
     localStorage.setItem("Buttons",JSON.stringify(button_array));
 }
 
-
+// Function to create button from local storage
 function rendor(){
 
+    // getting data from the local storage
     var get_buttons = JSON.parse(localStorage.getItem("Buttons"));
 
+
     if(get_buttons){
+        // make a loop to get all data from the local storage
         for(var i=0; i<get_buttons.length; i++){
 
              button_array= get_buttons;
@@ -170,10 +176,12 @@ function rendor(){
              // Passing data
              var getval=button_array[i];
 
+            //  Create Button element
             var storage_button = $("<button>");
             storage_button.attr("class","btn mt-3 btn-secondary")
-
+            // add value to the button
             storage_button.text(getval);
+            // apend button to the html page
             var historyList = $("#history");
             historyList.append(storage_button);
 
