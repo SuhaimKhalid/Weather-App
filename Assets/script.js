@@ -140,6 +140,13 @@ function addToSearchHistory(search) {
 
     historyList.append(button);
 
+    var get_local = JSON.parse(localStorage.getItem("Buttons"));
+    if(get_local)
+    {
+        button_array=get_local;
+    }
+   
+    
     button_array.push(button.text())
     localStorage.setItem("Buttons",JSON.stringify(button_array));
 }
